@@ -7,6 +7,10 @@ const cityName = "";
 function submitForm(event) {
     event.preventDefault();
     const cityName = document.getElementById("cityName").value;
+    if (cityName == null || cityName == "") {
+        alert("ERROR: A city name is required. Please enter a city name.")
+    }
+    else 
     cityFormHandler(cityName);
 };
 
