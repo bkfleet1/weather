@@ -1,5 +1,39 @@
+  /* root variable */
+  :root {
+    --blue1:rgba(052,099,187,1);
+    --blue2:rgba(080,152,230,1);
+    --blue3:rgba(045,062,080,1);
+    --purple1:rgba(032,009,075);
+    --gray1:rgba(174,174,174,1);
+    --green1:rgba(021,115,071,1);
+    --white1:rgba(255,255,255,1);
+    --black1:rgba(000,000,000,1);
+  }
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+  }
+
+  button {
+    width: 100%;
+    margin: 5px;
+    background-color: var(--blue2);
+    color: var(--white1);
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+  }
+
+  #cityName {
+    width: 100%;
+    margin: 5px;
+    border-radius: 5px;
+    color: var(--black1);
+  }
+
+  .future {
+    background-color: var(--blue3);
+    color: var(--white1);
   }

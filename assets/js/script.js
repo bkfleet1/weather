@@ -23,6 +23,12 @@ const cityFormHandler = function (cityName) {
                 console.log(data);
                 const lon = data.coord.lon;
                 const lat = data.coord.lat;
+                const tDate = data.dt;
+                const tTemp = data.main.temp;
+                const tHumid = data.main.humidity;
+                const tWind = data.wind.speed;
+                const tIcon = data.icon;
+                console.log(tDate,tTemp,tHumid,tWind,tIcon);
                 fetch(urlTwo + lat + "&lon=" + lon + "&appid=" + weatherKey + "&units=imperial")
                     .then(async function (response2) {
                         if (response2.ok) {
