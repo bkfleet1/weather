@@ -8,6 +8,13 @@
     --green1:rgba(021,115,071,1);
     --white1:rgba(255,255,255,1);
     --black1:rgba(000,000,000,1);
+    --uvi12: rgba(040,149,000,1);
+    --uvi345: rgba(247,228,000,1);
+    --uvi67: rgba(248,089,000,1);
+    --uvi8910: rgba(216,000,016,1);
+    --uvi11: rgba(107,073,200,1);
+    --banner-background: radial-gradient(circle, rgba(107,073,200,1) 10%, rgba(032,009,075) 90%);
+    --white2: rgba(240,240,240,1);
   }
 
 * {
@@ -16,25 +23,107 @@
     padding: 0;
   }
 
-  button {
+  .banner {
+    text-align: center;
+    color: var(--white1);
+    font-size: 1.4em;
+    background: var(--banner-background);
+    padding: 10px;
+    margin: 10px;
+    box-shadow: 9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px    rgba(255,255,255, 0.5);
+    }
+
+  .submit {
     width: 100%;
     margin: 5px;
-    background-color: var(--blue2);
-    color: var(--white1);
+    background: var(--blue2);
+    color: var(--black1);
     text-align: center;
-    border: none;
+    border: 1px solid var(--gray1);
     border-radius: 5px;
-  }
+    box-shadow: 9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px    rgba(255,255,255, 0.5);
+    }
 
   #cityName {
     width: 100%;
     margin: 5px;
     border-radius: 5px;
     color: var(--black1);
+    border: 1px solid var(--gray1);
+    inset-block: inset 0px 0px 9px 0px rgba(0,0,0,1);
+    box-shadow: 9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px    rgba(255,255,255, 0.5);
   }
 
   .future {
     background-color: var(--blue3);
     color: var(--white1);
+    
   }
 
+  .currentWeather {
+    padding: 10px;
+    border: 1px solid var(--gray1);
+    border-radius: 5px;
+    background: var(--white2);
+    box-shadow: 9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px    rgba(255,255,255, 0.5);
+  }
+
+  .uvi12 {
+    background-color: var(--uvi12);
+    padding-right: 5px;
+    padding-left: 5px;
+    color: var(--white1);
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+  }
+
+  .uvi345 {
+    background-color: var(--uvi345);
+    padding-right: 5px;
+    padding-left: 5px;
+    color: var(--black1);
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+  }
+
+  .uvi67 {
+    background-color: var(--uvi67);
+    padding-right: 5px;
+    padding-left: 5px;
+    color: var(--black1);
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+  }
+
+  .uvi8910 {
+    background-color: var(--uvi8910);
+    padding-right: 5px;
+    padding-left: 5px;
+    color: var(--black1);
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+  }
+
+  .uvi11 {
+    background-color: var(--uvi11);
+    padding-right: 5px;
+    padding-left: 5px;
+    color: var(--white1);
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+  }
+
+  .uviNone {
+    background-color: var(--white1);
+    padding-right: 5px;
+    padding-left: 5px;
+    color: var(--black1);
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+  }
