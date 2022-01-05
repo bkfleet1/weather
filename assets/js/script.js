@@ -22,14 +22,14 @@ const cityFormHandler = function (cityName) {
                 const cDay = cDate.getDate();
                 const cYear = cDate.getFullYear();
                 // const tIcon = data.weather.icon;
-                console.log(tTemp, tHumid, tWind, cityName);
-                currentWeather(tTemp, tHumid, tWind, cityName,cDay,cMonth,cYear);
                 fetch(urlTwo + lat + "&lon=" + lon + "&appid=" + weatherKey + "&units=imperial")
                     .then(async function (response2) {
                         if (response2.ok) {
                             return response2.json()
                                 .then(function (data2) {
                                     console.log(data2);
+                                    const tUvi = data2.current.uvi
+                                    currentWeather(tUvi,tTemp, tHumid, tWind, cityName,cDay,cMonth,cYear);
                                 });
                         }
                     });
@@ -114,22 +114,31 @@ function crtCurrentHumid(tHumid) {
     const currentHumid = document.createElement("p");
     currentHumid.classList.add("currentHumid");
     currentHumid.id = "currentHumid";
-    currentHumid.textContent = "Humidity "+tHumid+" %";
+    currentHumid.textContent = "Humidity: "+tHumid+" %";
     return currentHumid;
 }
 
+function crtCurrentUvi(tUvi) {
+    const currentUvi = document.createElement("p");
+    currentUvi.classList.add("currentUvi");
+    currentUvi.id = "currentUvi";
+    currentUvi.textContent = "UV Index: "+tUvi;
+    return currentUvi;
+}
 
 
-function currentWeather(tTemp, tHumid, tWind, cityName,cDay,cMonth,cYear) {
+function currentWeather(tUvi,tTemp, tHumid, tWind, cityName,cDay,cMonth,cYear) {
     const currentCity = crtCurrentCity(cityName,cDay,cMonth,cYear);
     const currentTemp = crtCurrentTemp(tTemp);
     const currentWind = crtCurrentWind(tWind);
     const currentHumid = crtCurrentHumid(tHumid);
+    const currentUvi = crtCurrentUvi(tUvi);
 
     document.querySelector("#weather-div").appendChild(currentCity);
     document.querySelector("#weather-div").appendChild(currentTemp);
     document.querySelector("#weather-div").appendChild(currentWind);
     document.querySelector("#weather-div").appendChild(currentHumid);
+    document.querySelector("#weather-div").appendChild(currentUvi);
 }
 
 
