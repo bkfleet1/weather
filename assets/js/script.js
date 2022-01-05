@@ -14,13 +14,16 @@ const cityFormHandler = function (cityName) {
                 const lon = data.coord.lon;
                 const lat = data.coord.lat;
                 const cityName = data.name
-                const tDate = data.dt;
                 const tTemp = data.main.temp;
                 const tHumid = data.main.humidity;
                 const tWind = data.wind.speed;
+                const cDate = new Date();
+                const cMonth = cDate.getMonth()+1;
+                const cDay = cDate.getDate();
+                const cYear = cDate.getFullYear();
                 // const tIcon = data.weather.icon;
-                console.log(tDate, tTemp, tHumid, tWind, cityName);
-                currentWeather(tDate, tTemp, tHumid, tWind, cityName);
+                console.log(tTemp, tHumid, tWind, cityName);
+                currentWeather(tTemp, tHumid, tWind, cityName,cDay,cMonth,cYear);
                 fetch(urlTwo + lat + "&lon=" + lon + "&appid=" + weatherKey + "&units=imperial")
                     .then(async function (response2) {
                         if (response2.ok) {
@@ -77,14 +80,56 @@ function crtSrchBtn() {
 }
 
 function crtWeatherDiv() {
-    const buildWeatherDiv = document.createElement("div")
-    buildWeatherDiv.classList.add("weather-div", "col-9");
+    const buildWeatherDiv = document.createElement("div");
+    buildWeatherDiv.classList.add("weather-div", "col-9","border","border-dark");
     buildWeatherDiv.id = "weather-div";
     return buildWeatherDiv;
 }
 
-function currentWeather(tDate, tTemp, tHumid, tWind, cityName) {
+function crtCurrentCity(cityName,cDay,cMonth,cYear) {
+    const currentCity = document.createElement("p");
+    currentCity.classList.add("currentCity");
+    currentCity.id = "currentCity";
+    currentCity.textContent = cityName+" ("+cMonth+"/"+cDay+"/"+cYear+")";
+    return currentCity;
+}
 
+function crtCurrentTemp(tTemp) {
+    const currentTemp = document.createElement("p");
+    currentTemp.classList.add("currentTemp");
+    currentTemp.id = "currentTemp";
+    currentTemp.textContent = "Temp: "+tTemp+" °F";
+    return currentTemp;
+}
+
+function crtCurrentWind(tWind) {
+    const currentWind = document.createElement("p");
+    currentWind.classList.add("currentWind");
+    currentWind.id = "currentWind";
+    currentWind.textContent = "Wind: "+ tWind+" mph";
+    return currentWind;
+}
+
+function crtCurrentHumid(tHumid) {
+    const currentHumid = document.createElement("p");
+    currentHumid.classList.add("currentHumid");
+    currentHumid.id = "currentHumid";
+    currentHumid.textContent = "Humidity "+tHumid+" %";
+    return currentHumid;
+}
+
+
+
+function currentWeather(tTemp, tHumid, tWind, cityName,cDay,cMonth,cYear) {
+    const currentCity = crtCurrentCity(cityName,cDay,cMonth,cYear);
+    const currentTemp = crtCurrentTemp(tTemp);
+    const currentWind = crtCurrentWind(tWind);
+    const currentHumid = crtCurrentHumid(tHumid);
+
+    document.querySelector("#weather-div").appendChild(currentCity);
+    document.querySelector("#weather-div").appendChild(currentTemp);
+    document.querySelector("#weather-div").appendChild(currentWind);
+    document.querySelector("#weather-div").appendChild(currentHumid);
 }
 
 
