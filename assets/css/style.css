@@ -15,6 +15,7 @@
     --uvi11: rgba(107,073,200,1);
     --banner-background: radial-gradient(circle, rgba(107,073,200,1) 10%, rgba(032,009,075) 90%);
     --white2: rgba(240,240,240,1);
+    --font-family-one: Arial, sans-serif;
   }
 
 * {
@@ -23,22 +24,43 @@
     padding: 0;
   }
 
+  body {
+    font-family: var(--font-family-one);
+    font-size: 1.2vw;
+  }
+  /* .container {
+    width:100%;
+    margin:0;
+    padding: 0;
+    align-items: center;
+  }
+
+  .row {
+    width:100%;
+    margin:0;
+    padding: 0;
+  } */
+
   .banner {
     text-align: center;
     color: var(--white1);
-    font-size: 1.4em;
+    font-size: 1.7em;
+    font-weight: bold;
     background: var(--banner-background);
     padding: 10px;
-    margin: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
     box-shadow: 9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px    rgba(255,255,255, 0.5);
     }
 
   .submit {
     width: 100%;
     margin: 5px;
+    padding: 5px;
     background: var(--blue2);
     color: var(--black1);
     text-align: center;
+    font-weight: bold;
     border: 1px solid var(--gray1);
     border-radius: 5px;
     box-shadow: 9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px    rgba(255,255,255, 0.5);
@@ -47,6 +69,7 @@
   #cityName {
     width: 100%;
     margin: 5px;
+    padding: 5px;
     border-radius: 5px;
     color: var(--black1);
     border: 1px solid var(--gray1);
@@ -66,6 +89,11 @@
     border-radius: 5px;
     background: var(--white2);
     box-shadow: 9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px    rgba(255,255,255, 0.5);
+  }
+
+  .currentCity {
+    font-size: 1.5vw;
+    font-weight: bold;  
   }
 
   .uvi12 {
@@ -126,4 +154,24 @@
     text-align: center;
     border: none;
     border-radius: 5px;
+  }
+
+  .forecastWrapper {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 10px;
+  }
+
+  .dailyDiv {
+    padding: 15px;
+    border: 1px solid var(--gray1);
+    border-radius: 5px;
+    color: var(--white1);
+    background: var(--blue3);
+    box-shadow: 9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px    rgba(255,255,255, 0.5);
+  }
+
+img {
+max-width: 35px;
+max-height: 35px;
   }

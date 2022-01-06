@@ -33,7 +33,9 @@ const cityFormHandler = function (cityName) {
                                     currentWeather(tUvi, tTemp, tHumid, tWind, cityName, cDay, cMonth, cYear);
                                     console.log(dailyArray);
                                     forecastWeather(dailyArray);
-                                });
+                                }
+                                                               
+                                );
                         }
                     });
             } else {
@@ -45,6 +47,8 @@ const cityFormHandler = function (cityName) {
 
 function forecastWeather(dailyArray) {
     for (let i = 1; i < 6; i++) {
+        const forecastWrappper=crtForecastWrapper();
+        const dailyDiv = crtDailyForecastDiv(i);
         const forecastDate = getForecastDate(dailyArray,i);
         const forecastTemp = getForecastTemp(dailyArray,i);
         const forecastWind = getForecastWind(dailyArray,i);
@@ -52,7 +56,13 @@ function forecastWeather(dailyArray) {
         const forecastIcon = getForecastIcon(dailyArray,i);
         
         console.log(forecastDate,forecastTemp,forecastWind,forecastHumid,forecastIcon);
-        // document.querySelector("#weatherDiv").appendChild(buildCurrentDiv);
+        document.querySelector("#weatherDiv").appendChild(forecastWrappper);
+        document.querySelector("#forecastWrapper").appendChild(dailyDiv);
+        document.querySelector("#dailyDiv"+i).appendChild(forecastDate);
+        document.querySelector("#dailyDiv"+i).appendChild(forecastIcon);
+        document.querySelector("#dailyDiv"+i).appendChild(forecastTemp);
+        document.querySelector("#dailyDiv"+i).appendChild(forecastWind);
+        document.querySelector("#dailyDiv"+i).appendChild(forecastHumid);
     }
 }
 
@@ -64,19 +74,20 @@ function crtForecastWrapper() {
 }
 
 function crtDailyForecastDiv(i) {
-    const dailyDiv = document.createElement("div");
-    dailyDiv.classList.add("dailyDiv","col-2");
+    const dailyDiv = document.createElement("div","lh-sm");
+    dailyDiv.classList.add("dailyDiv");
     dailyDiv.id = "dailyDiv"+i;
     return dailyDiv;
 }
 
 function getForecastDate(dailyArray,i) {
-    const forecastDate = document.createElement("p");
+    const forecastDate = document.createElement("span");
     forecastDate.classList.add("forecastDate");
     forecastDate.id = "forecastDate-"+i;
     forecastDate.textContent = dailyArray[i].dt;
     return forecastDate;
 }
+
 
 function getForecastTemp(dailyArray,i) {
     const forecastTemp = document.createElement("p");
@@ -102,14 +113,17 @@ function getForecastHumid(dailyArray,i) {
     return forecastHumid;
 }
 
+
 function getForecastIcon(dailyArray,i) {
-    const forecastIcon=document.createElement("p");
+for (let index = 0; index < dailyArray[i].weather.length; index++) {
+    const weatherIcon = dailyArray[i].weather[index].icon;
+    const forecastIcon=document.createElement("span");
     forecastIcon.classList.add("forecastIcon");
     forecastIcon.id = "forecastIcon-"+i;
-    forecastIcon.textContent = dailyArray[i].weather.icon;
+    forecastIcon.innerHTML = '<img src = "http://openweathermap.org/img/wn/'+ weatherIcon +'@2x.png" alt="weather icon">';
     return forecastIcon;
 }
-
+}
 
 function crtBanner() {
     const buildBanner = document.createElement("div")
@@ -121,7 +135,7 @@ function crtBanner() {
 
 function crtRow() {
     const buildRow = document.createElement("div");
-    buildRow.classList.add("row", "col-12", "d-flex");
+    buildRow.classList.add("row", "d-flex");
     buildRow.id = "row";
     return buildRow;
 }
