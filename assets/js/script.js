@@ -4,8 +4,9 @@ const urlTwo = "https://api.openweathermap.org/data/2.5/onecall?lat=";
 const cityName = "";
 const dailyArray = [];
 
+
+// initiates weather API call using city name submitted in form.
 const cityFormHandler = function (cityName) {
-    // console.log(cityName)
     fetch(urlOne + cityName + "&appid=" + weatherKey + "&units=imperial")
         .then(async function (response) {
             if (response.ok) {
@@ -17,11 +18,12 @@ const cityFormHandler = function (cityName) {
                 const tTemp = data.main.temp;
                 const tHumid = data.main.humidity;
                 const tWind = data.wind.speed;
+                const tIcon = data.weather;
                 const cDate = new Date();
                 const cMonth = cDate.getMonth() + 1;
                 const cDay = cDate.getDate();
                 const cYear = cDate.getFullYear();
-                // const tIcon = data.weather.icon;
+                console.log(tIcon);
                 fetch(urlTwo + lat + "&lon=" + lon + "&appid=" + weatherKey + "&units=imperial")
                     .then(async function (response2) {
                         if (response2.ok) {
@@ -30,11 +32,11 @@ const cityFormHandler = function (cityName) {
                                     console.log(data2);
                                     const dailyArray = data2.daily;
                                     const tUvi = data2.current.uvi
-                                    currentWeather(tUvi, tTemp, tHumid, tWind, cityName, cDay, cMonth, cYear);
+                                    currentWeather(tUvi, tTemp, tHumid, tWind, tIcon, cityName, cDay, cMonth, cYear);
                                     console.log(dailyArray);
                                     forecastWeather(dailyArray);
                                 }
-                                                               
+
                                 );
                         }
                     });
@@ -45,86 +47,9 @@ const cityFormHandler = function (cityName) {
         );
 };
 
-function forecastWeather(dailyArray) {
-    for (let i = 1; i < 6; i++) {
-        const forecastWrappper=crtForecastWrapper();
-        const dailyDiv = crtDailyForecastDiv(i);
-        const forecastDate = getForecastDate(dailyArray,i);
-        const forecastTemp = getForecastTemp(dailyArray,i);
-        const forecastWind = getForecastWind(dailyArray,i);
-        const forecastHumid = getForecastHumid(dailyArray,i);
-        const forecastIcon = getForecastIcon(dailyArray,i);
-        
-        console.log(forecastDate,forecastTemp,forecastWind,forecastHumid,forecastIcon);
-        document.querySelector("#weatherDiv").appendChild(forecastWrappper);
-        document.querySelector("#forecastWrapper").appendChild(dailyDiv);
-        document.querySelector("#dailyDiv"+i).appendChild(forecastDate);
-        document.querySelector("#dailyDiv"+i).appendChild(forecastIcon);
-        document.querySelector("#dailyDiv"+i).appendChild(forecastTemp);
-        document.querySelector("#dailyDiv"+i).appendChild(forecastWind);
-        document.querySelector("#dailyDiv"+i).appendChild(forecastHumid);
-    }
-}
-
-function crtForecastWrapper() {
-    const forecastWrappper = document.createElement("div");
-    forecastWrappper.classList.add("forecastWrapper");
-    forecastWrappper.id = "forecastWrapper";
-    return forecastWrappper;
-}
-
-function crtDailyForecastDiv(i) {
-    const dailyDiv = document.createElement("div","lh-sm");
-    dailyDiv.classList.add("dailyDiv");
-    dailyDiv.id = "dailyDiv"+i;
-    return dailyDiv;
-}
-
-function getForecastDate(dailyArray,i) {
-    const forecastDate = document.createElement("span");
-    forecastDate.classList.add("forecastDate");
-    forecastDate.id = "forecastDate-"+i;
-    forecastDate.textContent = dailyArray[i].dt;
-    return forecastDate;
-}
 
 
-function getForecastTemp(dailyArray,i) {
-    const forecastTemp = document.createElement("p");
-    forecastTemp.classList.add("forecastTemp");
-    forecastTemp.id = "forecastTemp-"+i;
-    forecastTemp.textContent = "Temp: " + dailyArray[i].temp.day + " °F";
-    return forecastTemp;
-}
-
-function getForecastWind(dailyArray,i) {
-    const forecastWind = document.createElement("p");
-    forecastWind.classList.add("forecastWind");
-    forecastWind.id = "forecastWind-"+i;
-    forecastWind.textContent =  "Wind: " + dailyArray[i].wind_speed + " mph";
-    return forecastWind;
-}
-
-function getForecastHumid(dailyArray,i) {
-    const forecastHumid = document.createElement("p");
-    forecastHumid.classList.add("forecastHumid")
-    forecastHumid.id = "forecastHumid-"+i;
-    forecastHumid.textContent = "Humidity: " + dailyArray[i].humidity + "%";
-    return forecastHumid;
-}
-
-
-function getForecastIcon(dailyArray,i) {
-for (let index = 0; index < dailyArray[i].weather.length; index++) {
-    const weatherIcon = dailyArray[i].weather[index].icon;
-    const forecastIcon=document.createElement("span");
-    forecastIcon.classList.add("forecastIcon");
-    forecastIcon.id = "forecastIcon-"+i;
-    forecastIcon.innerHTML = '<img src = "http://openweathermap.org/img/wn/'+ weatherIcon +'@2x.png" alt="weather icon">';
-    return forecastIcon;
-}
-}
-
+// building html structure dynamically
 function crtBanner() {
     const buildBanner = document.createElement("div")
     buildBanner.classList.add("banner");
@@ -140,6 +65,7 @@ function crtRow() {
     return buildRow;
 }
 
+// building form for user to enter city name.
 function crtSrchDiv() {
     const buildSrchDiv = document.createElement("div");
     buildSrchDiv.classList.add("search-div", "col-3");
@@ -172,6 +98,8 @@ function crtSrchBtn() {
     return buildSrchBtn;
 }
 
+
+// building current weather section
 function crtWeatherDiv() {
     const buildWeatherDiv = document.createElement("div");
     buildWeatherDiv.classList.add("weatherDiv", "col-9");
@@ -187,7 +115,7 @@ function crtCurrentDiv() {
 }
 
 function crtCurrentCity(cityName, cDay, cMonth, cYear) {
-    const currentCity = document.createElement("p");
+    const currentCity = document.createElement("span");
     currentCity.classList.add("currentCity");
     currentCity.id = "currentCity";
     currentCity.textContent = cityName + " (" + cMonth + "/" + cDay + "/" + cYear + ")";
@@ -243,11 +171,32 @@ function uviColor(tUvi) {
     else return "uviNone"
 }
 
+function crtIcon(tIcon) {
+    for (let x = 0; x < tIcon.length; x++) {
+        const gettIcon = tIcon[x].icon;
+        const buildIcon = document.createElement("span");
+        buildIcon.classList.add("tIcon");
+        buildIcon.id = "tIcon-" + x;
+        buildIcon.innerHTML = '<img src = "http://openweathermap.org/img/wn/' + gettIcon + '@2x.png" alt="current weather icon">';
+        return buildIcon;
+    }
+}
 
-function currentWeather(tUvi, tTemp, tHumid, tWind, cityName, cDay, cMonth, cYear) {
+function crtTodayDiv() {
+    buildTodayDiv = document.createElement("div");
+    buildTodayDiv.classList.add("todayDiv");
+    buildTodayDiv.id = "todayDiv";
+    return buildTodayDiv;
+}
+
+
+// assembling current weather section
+function currentWeather(tUvi, tTemp, tHumid, tWind, tIcon, cityName, cDay, cMonth, cYear) {
     const buildWeatherDiv = crtWeatherDiv();
     const buildCurrentDiv = crtCurrentDiv();
+    const buildTodayDiv = crtTodayDiv();
     const currentCity = crtCurrentCity(cityName, cDay, cMonth, cYear);
+    const buildIcon = crtIcon(tIcon);
     const currentTemp = crtCurrentTemp(tTemp);
     const currentWind = crtCurrentWind(tWind);
     const currentHumid = crtCurrentHumid(tHumid);
@@ -256,7 +205,9 @@ function currentWeather(tUvi, tTemp, tHumid, tWind, cityName, cDay, cMonth, cYea
 
     document.querySelector("#row").appendChild(buildWeatherDiv);
     document.querySelector("#weatherDiv").appendChild(buildCurrentDiv);
-    document.querySelector("#currentWeather").appendChild(currentCity);
+    document.querySelector("#currentWeather").appendChild(buildTodayDiv);
+    document.querySelector("#todayDiv").appendChild(currentCity);
+    document.querySelector("#todayDiv").appendChild(buildIcon);
     document.querySelector("#currentWeather").appendChild(currentTemp);
     document.querySelector("#currentWeather").appendChild(currentWind);
     document.querySelector("#currentWeather").appendChild(currentHumid);
@@ -265,6 +216,90 @@ function currentWeather(tUvi, tTemp, tHumid, tWind, cityName, cDay, cMonth, cYea
 }
 
 
+// assembling daily forecast
+function forecastWeather(dailyArray) {
+    for (let i = 1; i < 6; i++) {
+        const forecastWrappper = crtForecastWrapper();
+        const dailyDiv = crtDailyForecastDiv(i);
+        const forecastDate = getForecastDate(dailyArray, i);
+        const forecastTemp = getForecastTemp(dailyArray, i);
+        const forecastWind = getForecastWind(dailyArray, i);
+        const forecastHumid = getForecastHumid(dailyArray, i);
+        const forecastIcon = getForecastIcon(dailyArray, i);
+
+        console.log(forecastDate, forecastTemp, forecastWind, forecastHumid, forecastIcon);
+        document.querySelector("#weatherDiv").appendChild(forecastWrappper);
+        document.querySelector("#forecastWrapper").appendChild(dailyDiv);
+        document.querySelector("#dailyDiv" + i).appendChild(forecastDate);
+        document.querySelector("#dailyDiv" + i).appendChild(forecastIcon);
+        document.querySelector("#dailyDiv" + i).appendChild(forecastTemp);
+        document.querySelector("#dailyDiv" + i).appendChild(forecastWind);
+        document.querySelector("#dailyDiv" + i).appendChild(forecastHumid);
+    }
+}
+
+// building daily forecast
+
+function crtForecastWrapper() {
+    const forecastWrappper = document.createElement("div");
+    forecastWrappper.classList.add("forecastWrapper");
+    forecastWrappper.id = "forecastWrapper";
+    return forecastWrappper;
+}
+
+function crtDailyForecastDiv(i) {
+    const dailyDiv = document.createElement("div", "lh-sm");
+    dailyDiv.classList.add("dailyDiv");
+    dailyDiv.id = "dailyDiv" + i;
+    return dailyDiv;
+}
+
+function getForecastDate(dailyArray, i) {
+    const forecastDate = document.createElement("span");
+    forecastDate.classList.add("forecastDate");
+    forecastDate.id = "forecastDate-" + i;
+    forecastDate.textContent = dailyArray[i].dt;
+    return forecastDate;
+}
+
+
+function getForecastTemp(dailyArray, i) {
+    const forecastTemp = document.createElement("p");
+    forecastTemp.classList.add("forecastTemp");
+    forecastTemp.id = "forecastTemp-" + i;
+    forecastTemp.textContent = "Temp: " + dailyArray[i].temp.day + " °F";
+    return forecastTemp;
+}
+
+function getForecastWind(dailyArray, i) {
+    const forecastWind = document.createElement("p");
+    forecastWind.classList.add("forecastWind");
+    forecastWind.id = "forecastWind-" + i;
+    forecastWind.textContent = "Wind: " + dailyArray[i].wind_speed + " mph";
+    return forecastWind;
+}
+
+function getForecastHumid(dailyArray, i) {
+    const forecastHumid = document.createElement("p");
+    forecastHumid.classList.add("forecastHumid")
+    forecastHumid.id = "forecastHumid-" + i;
+    forecastHumid.textContent = "Humidity: " + dailyArray[i].humidity + "%";
+    return forecastHumid;
+}
+
+function getForecastIcon(dailyArray, i) {
+    for (let index = 0; index < dailyArray[i].weather.length; index++) {
+        const weatherIcon = dailyArray[i].weather[index].icon;
+        const forecastIcon = document.createElement("span");
+        forecastIcon.classList.add("forecastIcon");
+        forecastIcon.id = "forecastIcon-" + i;
+        forecastIcon.innerHTML = '<img src = "http://openweathermap.org/img/wn/' + weatherIcon + '@2x.png" alt="weather icon">';
+        return forecastIcon;
+    }
+}
+
+
+// assembling initial html and search form
 $(document).ready(function () {
     const buildBanner = crtBanner();
     const buildRow = crtRow();
@@ -281,6 +316,7 @@ $(document).ready(function () {
     document.querySelector("#cityForm").appendChild(buildSrchBtn);
 
 
+// form event listener. validates submission is not null and then sends to API function (cityFormHandler)
     $('.submit').on('click', function (event) {
         event.preventDefault();
         const cityName = document.getElementById("cityName").value;
