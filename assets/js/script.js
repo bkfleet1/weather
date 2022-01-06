@@ -23,7 +23,7 @@ const cityFormHandler = function (cityName) {
                 const cMonth = cDate.getMonth() + 1;
                 const cDay = cDate.getDate();
                 const cYear = cDate.getFullYear();
-                console.log(tIcon);
+                localStorage.setItem("cityName",cityName);
                 fetch(urlTwo + lat + "&lon=" + lon + "&appid=" + weatherKey + "&units=imperial")
                     .then(async function (response2) {
                         if (response2.ok) {
@@ -92,11 +92,20 @@ function crtSrchInput() {
 
 function crtSrchBtn() {
     const buildSrchBtn = document.createElement("button");
-    buildSrchBtn.classList.add("submit")
+    buildSrchBtn.classList.add("submit");
     buildSrchBtn.type = "submit";
     buildSrchBtn.textContent = "Search";
     return buildSrchBtn;
 }
+
+// function crtHistoryBtn() {
+//     const buildHistoryBtn = document.createElement("button");
+//     buildHistoryBtn.classList.add("history");
+//     buildHistoryBtn.type = "submit";
+//     buildHistoryBtn.textContent = "Search";
+//     return buildHistoryBtn;
+// }
+
 
 
 // building current weather section
@@ -317,14 +326,24 @@ $(document).ready(function () {
 
 
 // form event listener. validates submission is not null and then sends to API function (cityFormHandler)
+
     $('.submit').on('click', function (event) {
         event.preventDefault();
-        const cityName = document.getElementById("cityName").value;
+        const cityName = $("#cityName").val();
         if (cityName == null || cityName == "") {
             alert("ERROR: A city name is required. Please enter a city name.")
         }
         else
             cityFormHandler(cityName);
-
     })
 });
+
+// $(document).ready(function () {
+//     $('textarea').each(function () {
+//         const cityName = $("#cityName").val();
+//         var getStored = localStorage.getItem(cityName);
+//         if (getStored !== null) {
+//             $(this).val(getStored);
+//         }
+//     })
+// });
