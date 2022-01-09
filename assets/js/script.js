@@ -68,8 +68,8 @@ function crtRow() {
 // building form for user to enter city name.
 function crtSrchDiv() {
     const buildSrchDiv = document.createElement("div");
-    buildSrchDiv.classList.add("search-div", "col-3");
-    buildSrchDiv.id = "search-div";
+    buildSrchDiv.classList.add("searchDiv", "col-3");
+    buildSrchDiv.id = "searchDiv";
     return buildSrchDiv;
 }
 
@@ -319,7 +319,7 @@ $(document).ready(function () {
     document.querySelector(".container").appendChild(buildBanner);
     document.querySelector(".container").appendChild(buildRow);
     document.querySelector("#row").appendChild(buildSrchDiv);
-    document.querySelector("#search-div").appendChild(buildSrchForm);
+    document.querySelector("#searchDiv").appendChild(buildSrchForm);
     document.querySelector("#cityForm").appendChild(buildSrchInput);
     document.querySelector("#cityForm").appendChild(buildSrchBtn);
 
