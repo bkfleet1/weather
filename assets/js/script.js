@@ -98,15 +98,6 @@ function crtSrchBtn() {
     return buildSrchBtn;
 }
 
-// function crtHistoryBtn() {
-//     const buildHistoryBtn = document.createElement("button");
-//     buildHistoryBtn.classList.add("history");
-//     buildHistoryBtn.type = "submit";
-//     buildHistoryBtn.textContent = "Search";
-//     return buildHistoryBtn;
-// }
-
-
 
 // building current weather section
 function crtWeatherDiv() {
@@ -186,7 +177,7 @@ function crtIcon(tIcon) {
         const buildIcon = document.createElement("span");
         buildIcon.classList.add("tIcon");
         buildIcon.id = "tIcon-" + x;
-        buildIcon.innerHTML = '<img src = "http://openweathermap.org/img/wn/' + gettIcon + '@2x.png" alt="current weather icon">';
+        buildIcon.innerHTML = '<img src = "http://openweathermap.org/img/wn/' + gettIcon + '@2x.png" class="cIcon" alt="current weather icon">';
         return buildIcon;
     }
 }
@@ -198,6 +189,20 @@ function crtTodayDiv() {
     return buildTodayDiv;
 }
 
+function crtForecastBanner() {
+    const forecastBanner = document.createElement("div");
+    forecastBanner.classList.add("forecastBanner");
+    forecastBanner.id = "forecastBanner";
+    forecastBanner.textContent = '5-Day Forecast:';
+    return forecastBanner;
+}
+
+function crtForecastWrapper() {
+    const forecastWrappper = document.createElement("div");
+    forecastWrappper.classList.add("forecastWrapper");
+    forecastWrappper.id = "forecastWrapper";
+    return forecastWrappper;
+}
 
 // assembling current weather section
 function currentWeather(tUvi, tTemp, tHumid, tWind, tIcon, cityName, cDay, cMonth, cYear) {
@@ -211,6 +216,8 @@ function currentWeather(tUvi, tTemp, tHumid, tWind, tIcon, cityName, cDay, cMont
     const currentHumid = crtCurrentHumid(tHumid);
     const currentUvi = crtCurrentUvi(tUvi);
     const buildUviBtn = crtUviBtn(tUvi);
+    const forecastBanner = crtForecastBanner();
+    const forecastWrappper = crtForecastWrapper();
 
     document.querySelector("#row").appendChild(buildWeatherDiv);
     document.querySelector("#weatherDiv").appendChild(buildCurrentDiv);
@@ -222,13 +229,14 @@ function currentWeather(tUvi, tTemp, tHumid, tWind, tIcon, cityName, cDay, cMont
     document.querySelector("#currentWeather").appendChild(currentHumid);
     document.querySelector("#currentWeather").appendChild(currentUvi);
     document.querySelector("#currentWeather").appendChild(buildUviBtn);
+    document.querySelector("#weatherDiv").appendChild(forecastBanner);
+    document.querySelector("#weatherDiv").appendChild(forecastWrappper);
 }
 
 
 // assembling daily forecast
 function forecastWeather(dailyArray) {
     for (let i = 1; i < 6; i++) {
-        const forecastWrappper = crtForecastWrapper();
         const dailyDiv = crtDailyForecastDiv(i);
         const forecastDate = getForecastDate(dailyArray, i);
         const forecastTemp = getForecastTemp(dailyArray, i);
@@ -237,7 +245,6 @@ function forecastWeather(dailyArray) {
         const forecastIcon = getForecastIcon(dailyArray, i);
 
         console.log(forecastDate, forecastTemp, forecastWind, forecastHumid, forecastIcon);
-        document.querySelector("#weatherDiv").appendChild(forecastWrappper);
         document.querySelector("#forecastWrapper").appendChild(dailyDiv);
         document.querySelector("#dailyDiv" + i).appendChild(forecastDate);
         document.querySelector("#dailyDiv" + i).appendChild(forecastIcon);
@@ -248,14 +255,6 @@ function forecastWeather(dailyArray) {
 }
 
 // building daily forecast
-
-function crtForecastWrapper() {
-    const forecastWrappper = document.createElement("div");
-    forecastWrappper.classList.add("forecastWrapper");
-    forecastWrappper.id = "forecastWrapper";
-    return forecastWrappper;
-}
-
 function crtDailyForecastDiv(i) {
     const dailyDiv = document.createElement("div", "lh-sm");
     dailyDiv.classList.add("dailyDiv");
@@ -265,7 +264,7 @@ function crtDailyForecastDiv(i) {
 
 function getForecastDate(dailyArray, i) {
     const forecastDate = document.createElement("span");
-    forecastDate.classList.add("forecastDate");
+    forecastDate.classList.add("forecastDate","forecast");
     forecastDate.id = "forecastDate-" + i;
     forecastDate.textContent = dailyArray[i].dt;
     return forecastDate;
@@ -274,7 +273,7 @@ function getForecastDate(dailyArray, i) {
 
 function getForecastTemp(dailyArray, i) {
     const forecastTemp = document.createElement("p");
-    forecastTemp.classList.add("forecastTemp");
+    forecastTemp.classList.add("forecastTemp","forecast");
     forecastTemp.id = "forecastTemp-" + i;
     forecastTemp.textContent = "Temp: " + dailyArray[i].temp.day + " °F";
     return forecastTemp;
@@ -282,7 +281,7 @@ function getForecastTemp(dailyArray, i) {
 
 function getForecastWind(dailyArray, i) {
     const forecastWind = document.createElement("p");
-    forecastWind.classList.add("forecastWind");
+    forecastWind.classList.add("forecastWind","forecast");
     forecastWind.id = "forecastWind-" + i;
     forecastWind.textContent = "Wind: " + dailyArray[i].wind_speed + " mph";
     return forecastWind;
@@ -290,7 +289,7 @@ function getForecastWind(dailyArray, i) {
 
 function getForecastHumid(dailyArray, i) {
     const forecastHumid = document.createElement("p");
-    forecastHumid.classList.add("forecastHumid")
+    forecastHumid.classList.add("forecastHumid","forecast")
     forecastHumid.id = "forecastHumid-" + i;
     forecastHumid.textContent = "Humidity: " + dailyArray[i].humidity + "%";
     return forecastHumid;
@@ -302,7 +301,7 @@ function getForecastIcon(dailyArray, i) {
         const forecastIcon = document.createElement("span");
         forecastIcon.classList.add("forecastIcon");
         forecastIcon.id = "forecastIcon-" + i;
-        forecastIcon.innerHTML = '<img src = "http://openweathermap.org/img/wn/' + weatherIcon + '@2x.png" alt="weather icon">';
+        forecastIcon.innerHTML = '<img src = "http://openweathermap.org/img/wn/' + weatherIcon + '@2x.png" class="fIcon" alt="weather icon">';
         return forecastIcon;
     }
 }
@@ -326,7 +325,6 @@ $(document).ready(function () {
 
 
 // form event listener. validates submission is not null and then sends to API function (cityFormHandler)
-
     $('.submit').on('click', function (event) {
         event.preventDefault();
         const cityName = $("#cityName").val();
@@ -334,16 +332,7 @@ $(document).ready(function () {
             alert("ERROR: A city name is required. Please enter a city name.")
         }
         else
+            $("#cityForm")[0].reset();
             cityFormHandler(cityName);
     })
 });
-
-// $(document).ready(function () {
-//     $('textarea').each(function () {
-//         const cityName = $("#cityName").val();
-//         var getStored = localStorage.getItem(cityName);
-//         if (getStored !== null) {
-//             $(this).val(getStored);
-//         }
-//     })
-// });

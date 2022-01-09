@@ -91,7 +91,7 @@
     box-shadow: 9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px    rgba(255,255,255, 0.5);
   }
 
-  .currentCity {
+  .currentCity, .forecastBanner {
     font-size: 1.5vw;
     font-weight: bold;  
   }
@@ -160,18 +160,26 @@
     display: flex;
     justify-content: space-between;
     padding-top: 10px;
+    width: 100%;
   }
 
   .dailyDiv {
     padding: 15px;
     border: 1px solid var(--gray1);
+    font-size: 1em;
     border-radius: 5px;
     color: var(--white1);
     background: var(--blue3);
     box-shadow: 9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px    rgba(255,255,255, 0.5);
   }
 
-img {
-max-width: 35px;
-max-height: 35px;
+  .todayDiv img {
+    max-width: 55px;
+    max-height: 55px;
   }
+
+  .forecastIcon img {
+    max-width: 25px;
+    max-height: 25px;
+  }
+
