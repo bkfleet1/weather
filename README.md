@@ -45,7 +45,7 @@ The developer performed the following steps to initiate the project.
 >> - git checkout -b develop
 
 These steps completed the creation of the initial project files and directories. The image below illustrates the local repository created.
->> [local repository image](./assets/images/local-repository.png)
+>> ![local repository image](./assets/images/local-repository.png)
 
 
 # Application & Code Repository
