@@ -11,8 +11,7 @@ const cityFormHandler = function (cityName) {
         .then(async function (response) {
             if (response.ok) {
                 const data = await response.json();
-                console.log(data);
-                const lon = data.coord.lon;
+                 const lon = data.coord.lon;
                 const lat = data.coord.lat;
                 const cityName = data.name
                 const tTemp = data.main.temp;
@@ -29,11 +28,9 @@ const cityFormHandler = function (cityName) {
                         if (response2.ok) {
                             return response2.json()
                                 .then(function (data2) {
-                                    console.log(data2);
-                                    const dailyArray = data2.daily;
+                                      const dailyArray = data2.daily;
                                     const tUvi = data2.current.uvi
                                     currentWeather(tUvi, tTemp, tHumid, tWind, tIcon, cityName, cDay, cMonth, cYear);
-                                    console.log(dailyArray);
                                     forecastWeather(dailyArray);
                                 }
 
@@ -327,7 +324,7 @@ $(document).ready(function () {
 // form event listener. validates submission is not null and then sends to API function (cityFormHandler)
     $('.submit').on('click', function (event) {
         event.preventDefault();
-        const cityName = $("#cityName").val();
+        const cityName = $("#cityName").val().trim();
         if (cityName == null || cityName == "") {
             alert("ERROR: A city name is required. Please enter a city name.")
         }
